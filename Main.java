@@ -32,6 +32,14 @@ public class Main {
         System.out.flush();
     }
 
+    public static void tempoVisualizar(){
+       try {
+        Thread.sleep(2000);
+       } catch (Exception e) {
+        //
+       }
+    }
+
     private static void listar(){
         //List<Livro> livros = biblio.pesquisarTodos();
         var livros = biblio.pesquisarTodos();
@@ -48,6 +56,8 @@ public class Main {
         if(livros.isEmpty()){
             System.out.println("A lista está vazia.");
         }
+        System.out.println("Pressione Enter para continuar...");
+        input.nextLine(); 
     }
 
     private static void adicionar(){
@@ -57,9 +67,9 @@ public class Main {
         String titulo = input.nextLine();
         novoLivro.setTitulo(titulo);
         
-        System.out.print("Informe o nome do autor: "); //nome do autor pode ser númerico.
+        System.out.print("Informe o nome do autor: "); 
         novoLivro.setAutor(input.nextLine());
-        input.nextLine();
+        //input.nextLine();
                 
         
 
@@ -73,7 +83,7 @@ public class Main {
             System.out.print("Informe o ano de publicação: ");
             String anoStr = input.nextLine();
 
-        // Tentar converter a entrada para inteiro
+        
         try {
             anoPublicacao = Integer.parseInt(anoStr);
             if(anoPublicacao  <= 1400 || anoPublicacao > LocalDate.now().getYear()){
@@ -81,14 +91,15 @@ public class Main {
                 
             }else{
                 novoLivro.setAnoPublicacao(anoPublicacao);
-                input.nextLine();
-                entradaValida = true;
+                entradaValida = true; //mudei aqui
+               // input.nextLine();
+                
             }
             
             
             
             } 
-         catch (NumberFormatException e) {
+         catch (Exception e) { //mudei aqui tbm
            
             System.out.println("Erro: Por favor, informe um ano válido (número inteiro).");
         }
@@ -103,16 +114,16 @@ public class Main {
         System.out.print("Informe o número de páginas: ");
         String paginasStr = input.nextLine();
 
-        // Tentar converter a entrada para inteiro
+       
         try {
             nPaginas = Integer.parseInt(paginasStr);
             if (nPaginas <= 0) {
                 System.out.println("Erro: O número de páginas deve ser maior que zero (não são permitidos números negativos).");
             } else {
                 novoLivro.setnPaginas(nPaginas);
-                entradaValida = true; // Saia do loop se a entrada for válida
+                entradaValida = true; 
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) { //mudei aqui tbm
            
             System.out.println("Erro: Por favor, informe um número válido para páginas.");
         }
@@ -124,10 +135,10 @@ public class Main {
             System.out.println(" ********** Livro adicionado com Sucesso! ************");
         } catch (Exception e) {
             System.out.println("ERRO: " + e.getMessage());
-            e.printStackTrace();
+           
         }
         
-        input.nextLine(); // espera
+        input.nextLine(); // espera o usuário dar enter 
     }
 
     public static void pesquisarPorTitulo(){
@@ -153,6 +164,8 @@ public class Main {
             }
         // É printado os livros encontrados.
         }
+        System.out.println("Pressione Enter para continuar...");
+        input.nextLine(); 
     }
         
         
@@ -211,7 +224,7 @@ public class Main {
 
     public static void main(String[] args) {
         
-        //aqui está o start da nossa aplicação
+       //aqui está o start da nossa aplicação
        String menu = """
        ###################################################
 
@@ -227,14 +240,19 @@ public class Main {
             
                """;
         int opcao;
-        do {
+      
+        do { 
+            
+            
+            clear();
+            
            // System.out.println(menu);
             //opcao = input.nextInt();
             //input.nextLine(); //limpar buffer
             
             opcao = inputNumerico(menu);
             
-            clear();
+            
             switch (opcao) {
                 
                 case 0:
@@ -246,7 +264,7 @@ public class Main {
                     adicionar();
                     break;
                 case 2:
-                    clear();
+                    
                     listar();
                     break;
                 case 3:
@@ -264,6 +282,7 @@ public class Main {
                 input.nextLine();
                     break;
             }
+            tempoVisualizar();
         } while (opcao != 0);
           clear();
             
